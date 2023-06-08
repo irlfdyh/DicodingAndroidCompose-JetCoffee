@@ -50,12 +50,18 @@ fun JetCoffeeApp() {
         modifier = Modifier.verticalScroll(rememberScrollState())
     ) {
         Banner()
-        SectionText(title = stringResource(R.string.section_category))
-        CategoryRow()
-        SectionText(title = stringResource(id = R.string.section_favorite_menu))
-        MenuRow(menus = dummyMenu)
-        SectionText(title = stringResource(id = R.string.section_best_seller_menu))
-        MenuRow(menus = dummyBestSellerMenu)
+        HomeSection(
+            title = stringResource(R.string.section_category),
+            content = { CategoryRow() }
+        )
+        HomeSection(
+            title = stringResource(id = R.string.section_favorite_menu),
+            content = { MenuRow(menus = dummyMenu) }
+        )
+        HomeSection(
+            title = stringResource(id = R.string.section_best_seller_menu),
+            content = { MenuRow(menus = dummyBestSellerMenu) }
+        )
     }
 }
 
@@ -105,6 +111,22 @@ fun MenuRow(
     }
 }
 
+@Composable
+fun HomeSection(
+    modifier: Modifier = Modifier,
+    title: String,
+    content: @Composable () -> Unit
+) {
+    Column(
+        modifier = modifier
+    ) {
+        SectionText(
+            title = title,
+            modifier = modifier
+        )
+        content()
+    }
+}
 
 @Preview(showBackground = true, device = Devices.PIXEL_4)
 @Composable
